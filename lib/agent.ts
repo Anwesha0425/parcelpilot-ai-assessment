@@ -6,6 +6,7 @@ import {
   FunctionCallingMode,
   Tool,
   SchemaType,
+  Content,
 } from "@google/generative-ai";
 import { SessionContext } from "./tools/data-tools";
 import {
@@ -564,7 +565,7 @@ export async function runAgent(
   // Gemini requires history to start with a 'user' role message.
   // The welcome message sent by the frontend is role 'assistant', so we skip
   // any leading assistant/model messages before the first user turn.
-  const rawHistory = messages.slice(0, -1).map((m) => ({
+  const rawHistory: Content[] = messages.slice(0, -1).map((m) => ({
     role: m.role === "user" ? ("user" as const) : ("model" as const),
     parts: [{ text: m.content }],
   }));
